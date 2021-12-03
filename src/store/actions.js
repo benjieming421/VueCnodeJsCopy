@@ -1,13 +1,18 @@
-import Vue from 'vue'
+import { get } from '@/axios/index'
 
 export default {
   getArticleLists (context) {
-    Vue.$http.get('https://cnodejs.org/api/v1/topics', {
-      page: 1,
-      limit: 10,
-      mdrender: 'false'
-    }).then(res => {
+    var para = {
+      params: {
+        page: 1,
+        limit: 2,
+        mdrender: 'false'
+      }
+    }
+    get('/topics', para).then(res => {
       context.commit('addArticleLists', res.data)
+    }).catch((res) => {
+      console.log('MaiSec.vue: ', res)
     })
   }
 }
